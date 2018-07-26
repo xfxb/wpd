@@ -6,16 +6,16 @@ const autoprefixer = require('autoprefixer');
 
 const config = {
 
-  entry: './src/index.js',
+  entry: path.resolve(process.cwd(), './src/index.js'),
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(process.cwd(), 'dist'),
     filename: 'index.[hash:8].js',
     publicPath: '',
   },
   resolve: {
     // 引入模块的时候，可以不用扩展名
     extensions: ['.js', '.less', '.json', '.css'],
-    modules: [path.resolve(__dirname, 'node_modules')],
+    modules: [path.resolve(process.cwd(), 'node_modules')],
   },
   devtool: 'cheap-module-eval-source-map',
   module: {
@@ -52,7 +52,7 @@ const config = {
             ],
           },
         },
-        include: path.join(__dirname, './src'),
+        include: path.join(process.cwd(), 'src'),
         exclude: /node_modules/,
       },
       {
@@ -65,7 +65,7 @@ const config = {
             ],
           },
         }],
-        // include: path.join(__dirname, './src'),
+        // include: path.join(process.cwd(), './src'),
         // exclude: /node_modules/,
       },
       {
@@ -117,7 +117,7 @@ const config = {
       to: '', // 目标地址，相对于output的path目录
     }]),
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: path.resolve(process.cwd(), './public/index.html'),
       filename: 'index.html',
       //   hash: true,
     }),

@@ -1,4 +1,5 @@
 const merge = require('webpack-merge');// 用来合并配置文件
+const path = require('path');
 const base = require('./webpack.base');
 const dev = require('./webpack.dev.config');
 const prod = require('./webpack.prod.config');
@@ -6,6 +7,7 @@ const prod = require('./webpack.prod.config');
 let other = '';
 
 console.log('----------------->', process.env.CONTENT_BASE);
+console.log('----------------->', path.resolve(process.cwd(), 'dist'));
 console.log('----------------->', parseInt(process.env.PORT, 10));
 
 // console.log(process.env.NODE_ENV )

@@ -11,7 +11,7 @@ module.exports = {
   //   entry: ['./src/index.js', 'webpack-hot-middleware/client'],
   devtool: 'cheap-module-eval-source-map',
   devServer: {
-    contentBase: process.env.CONTENT_BASE || path.resolve(__dirname, 'dist'),
+    contentBase: process.env.CONTENT_BASE || path.resolve(process.cwd(), 'dist'),
     publicPath: '/',
     port: DEFAULT_PORT,
     hot: true,

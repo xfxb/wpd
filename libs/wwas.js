@@ -1,11 +1,14 @@
 
-const spawn = require('cross-spawn');
+// const spawn = require('cross-spawn');
 // import { fork } from 'child_process';
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server/lib/Server');
 
 const path = require('path');
 const chalk = require('chalk');
 const os = require('os');
 const debug = require('debug');
+const webpackConfig = require('../webpack.config');
 
 
 function OS_check() {
@@ -50,6 +53,13 @@ class Wwas {
     // const args = process.argv.slice(3);
     console.log(this.projectPath);
 
+    // console.log(webpackConfig);
+
+
+    const server = new WebpackDevServer(webpack(webpackConfig));
+
+    // console.log(server);
+
     // console.log(process.env);
     // console.log(process.env.PORT);
 
@@ -61,9 +71,9 @@ class Wwas {
     // TODO
     // process.env.PORT 和 contBase变量 无效，webpack-dev-server 找不到工作目录
 
-    const wds = spawn('webpack-dev-server', [], {
-      stdio: 'inherit',
-    });
+    // const wds = spawn('webpack-dev-server', [], {
+    //   stdio: 'inherit',
+    // });
 
     // wds.stdout.on('data', (data) => {
     //   console.log(`stdout: ${data}`);
@@ -73,9 +83,9 @@ class Wwas {
     //   console.log(`stderr: ${data}`);
     // });
 
-    wds.on('close', (code) => {
-      console.log(`child process exited with code ${code}`);
-    });
+    // wds.on('close', (code) => {
+    //   console.log(`child process exited with code ${code}`);
+    // });
     // console.log(this.options);
 
     // console.log(process.cwd());
