@@ -21,6 +21,13 @@
   },
   "homepage": "https://github.com/zeyueguo/wad#readme",
   "devDependencies": {
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.1.0"
+  },
+  "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.8.0",
     "babel-eslint": "^7.2.3",
@@ -38,13 +45,6 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-runtime": "^6.23.0",
-    "eslint": "^4.14.0",
-    "eslint-config-airbnb": "^17.0.0",
-    "eslint-plugin-import": "^2.6.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.1.0"
-  },
-  "dependencies": {
     "autoprefixer": "^9.0.0",
     "babel-preset-stage-0": "^6.24.1",
     "chalk": "^2.4.1",
