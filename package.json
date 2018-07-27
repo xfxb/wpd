@@ -9,9 +9,12 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development API_ENV=qa003 webpack-dev-server",
     "build": "cross-env NODE_ENV=production API_ENV=production webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release:major": "npm version prerelease && git push --follow-tags && npm publish --tag beta",
+    "release:minor": "npm version prerelease && git push --follow-tags && npm publish --tag beta",
+    "release:patch": "npm version prerelease && git push --follow-tags && npm publish --tag beta"
   },
-  "author": "",
+  "author": "maiyan",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/zeyueguo/wad/issues"
@@ -43,6 +46,7 @@
   },
   "dependencies": {
     "autoprefixer": "^9.0.0",
+    "babel-preset-stage-0": "^6.24.1",
     "chalk": "^2.4.1",
     "clean-webpack-plugin": "^0.1.19",
     "commander": "^2.16.0",

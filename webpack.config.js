@@ -6,16 +6,19 @@ const prod = require('./webpack.prod.config');
 
 let other = '';
 
-console.log('----------------->', process.env.CONTENT_BASE);
-console.log('----------------->', path.resolve(process.cwd(), 'dist'));
-console.log('----------------->', parseInt(process.env.PORT, 10));
+// console.log('----------------->', process.env.CONTENT_BASE);
+// console.log('----------------->', path.resolve(process.cwd(), 'dist'));
+// console.log('----------------->', parseInt(process.env.PORT, 10));
 
-// console.log(process.env.NODE_ENV )
+
+// console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
   other = dev;
 } else {
   other = prod;
 }
+
+// console.log(base);
 // console.log(merge(base, other));
 
 const mergeConf = merge(base, other);
@@ -29,6 +32,6 @@ for (const item of mergeConf.plugins) {
     }
   }
 }
-// console.log(mergeConf.plugins);
+// console.log(mergeConf);
 
 module.exports = mergeConf;

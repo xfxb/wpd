@@ -1,23 +1,24 @@
-const path = require('path');
+// const path = require('path');
 const webpack = require('webpack'); // 用于访问内置插件
 
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 8000;
 
 // https://github.com/umijs/umi/blob/master/packages/af-webpack/src/dev.js
 
-
 module.exports = {
   mode: 'development',
   //   entry: ['./src/index.js', 'webpack-hot-middleware/client'],
   devtool: 'cheap-module-eval-source-map',
   devServer: {
-    contentBase: process.env.CONTENT_BASE || path.resolve(process.cwd(), 'dist'),
+    contentBase: false,
+    host: '0.0.0.0',
+    // contentBase: process.env.CONTENT_BASE || path.resolve(process.cwd(), 'dist'),
     publicPath: '/',
     port: DEFAULT_PORT,
     hot: true,
-    compress: true,
-    historyApiFallback: true,
-    inline: true,
+    // compress: true,
+    // historyApiFallback: true,
+    // inline: true,
   },
   watch: true, // 只有在开启监听模式时，watchOptions才有意义
   watchOptions: {

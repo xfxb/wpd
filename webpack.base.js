@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
-
+console.log(path.resolve(process.cwd(), './public/index.html'));
 const config = {
 
   entry: path.resolve(process.cwd(), './src/index.js'),
@@ -23,32 +23,37 @@ const config = {
       {
         test: /\.js$/,
         use: {
-          loader: 'babel-loader',
+          loader: require.resolve('babel-loader'),
           options: {
-            presets: [
-              ['env', {
-                targets: {
-                  browsers: ['ie >= 10'],
-                },
-                // debug: true,
-                include: [
-                  'transform-es2015-shorthand-properties',
-                ],
-                useBuiltIns: true,
-              }],
-              'react',
-              // 'react-hot-loader/babel',
-            ],
+            babelrc: false,
             cacheDirectory: true,
+            presets: [
+              require.resolve('babel-preset-env'),
+              require.resolve('babel-preset-react'),
+              require.resolve('babel-preset-stage-0'),
+              // {
+              //   targets: {
+              //     browsers: ['ie >= 10'],
+              //   },
+              //   // debug: true,
+              //   include: [
+              //     require.resolve('transform-es2015-shorthand-properties'),
+              //   ],
+              //   useBuiltIns: true,
+              // }
+            ],
             plugins: [
-              'array-includes',
-              'babel-plugin-add-module-exports',
-              'babel-plugin-react-require',
-              'transform-class-properties',
-              'transform-decorators-legacy',
-              'transform-object-rest-spread',
+              require.resolve('babel-plugin-add-module-exports'),
+              require.resolve('babel-plugin-react-require'),
+              require.resolve('babel-plugin-dva-hmr'),
+              require.resolve('babel-plugin-add-module-exports'),
               ['import', { libraryName: 'antd', style: true }],
-              'dva-hmr',
+              require.resolve('babel-plugin-react-require'),
+              require.resolve('babel-plugin-syntax-dynamic-import'),
+              // 'transform-decorators-legacy',
+              // 'transform-class-properties',
+              // 'transform-object-rest-spread',
+              // 'array-includes',
             ],
           },
         },
@@ -57,24 +62,27 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader?minimize', {
-          loader: 'postcss-loader',
-          options: {
-            plugins: [
-              autoprefixer,
-            ],
-          },
-        }],
+        use: [
+          require.resolve('style-loader'),
+          require.resolve('css-loader'),
+          {
+            loader: require.resolve('postcss-loader'),
+            options: {
+              plugins: [
+                autoprefixer,
+              ],
+            },
+          }],
         // include: path.join(process.cwd(), './src'),
         // exclude: /node_modules/,
       },
       {
         test: /\.less$/,
         use: [
-          'style-loader',
-          'css-loader',
+          require.resolve('style-loader'),
+          require.resolve('css-loader'),
           {
-            loader: 'less-loader',
+            loader: require.resolve('less-loader'),
             options: {
               sourceMap: true,
               javascriptEnabled: true,
@@ -96,12 +104,12 @@ const config = {
       },
       {
         test: /\.(html|htm)/,
-        use: 'html-loader',
+        use: require.resolve('html-loader'),
       },
       {
         test: /\.(png|jpg|gif|svg|bmp|eot|woff|woff2|ttf)/,
         use: {
-          loader: 'url-loader',
+          loader: require.resolve('url-loader'),
           options: {
             limit: 5 * 1024,
             outputPath: '',
