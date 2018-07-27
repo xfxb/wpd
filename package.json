@@ -1,6 +1,6 @@
 {
   "name": "@xfsc/wwad",
-  "version": "0.1.2",
+  "version": "0.1.3-0",
   "description": "webapck dva ant.design",
   "main": "index.js",
   "bin": {
