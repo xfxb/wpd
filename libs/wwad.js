@@ -48,6 +48,12 @@ class Wwas {
     // End 判断node版本和OS升级提示
   }
 
+  build() {
+    console.log(this.projectPath);
+
+    webpack(webpackConfig);
+  }
+
 
   start() {
     // const args = process.argv.slice(3);
@@ -58,6 +64,11 @@ class Wwas {
 
     const server = new WebpackDevServer(webpack(webpackConfig));
 
+
+    server.listen(webpackConfig.devServer.port, webpackConfig.devServer.host, (err) => {
+      if (err) throw err;
+      // reportReadiness(uri, webpackConfig);
+    });
     // console.log(server);
 
     // console.log(process.env);

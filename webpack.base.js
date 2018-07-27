@@ -1,12 +1,13 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-console.log(path.resolve(process.cwd(), './public/index.html'));
+// console.log(path.resolve(process.cwd(), './public/index.html'));
+console.log(path.resolve(process.cwd(), 'src/index.js'));
 const config = {
 
-  entry: path.resolve(process.cwd(), './src/index.js'),
+  entry: path.resolve(process.cwd(), 'src/index.js'),
   output: {
     path: path.resolve(process.cwd(), 'dist'),
     filename: 'index.[hash:8].js',
@@ -15,7 +16,7 @@ const config = {
   resolve: {
     // 引入模块的时候，可以不用扩展名
     extensions: ['.js', '.less', '.json', '.css'],
-    modules: [path.resolve(process.cwd(), 'node_modules')],
+    // modules: [path.resolve(process.cwd(), 'node_modules')],
   },
   devtool: 'cheap-module-eval-source-map',
   module: {
@@ -25,7 +26,7 @@ const config = {
         use: {
           loader: require.resolve('babel-loader'),
           options: {
-            babelrc: false,
+            // babelrc: false,
             cacheDirectory: true,
             presets: [
               require.resolve('babel-preset-env'),
@@ -45,11 +46,11 @@ const config = {
             plugins: [
               require.resolve('babel-plugin-add-module-exports'),
               require.resolve('babel-plugin-react-require'),
-              require.resolve('babel-plugin-dva-hmr'),
               require.resolve('babel-plugin-add-module-exports'),
-              ['import', { libraryName: 'antd', style: true }],
               require.resolve('babel-plugin-react-require'),
               require.resolve('babel-plugin-syntax-dynamic-import'),
+              require.resolve('babel-plugin-dva-hmr'),
+              ['import', { libraryName: 'antd', style: true }],
               // 'transform-decorators-legacy',
               // 'transform-class-properties',
               // 'transform-object-rest-spread',
@@ -125,7 +126,7 @@ const config = {
       to: '', // 目标地址，相对于output的path目录
     }]),
     new HtmlWebpackPlugin({
-      template: path.resolve(process.cwd(), './public/index.html'),
+      template: path.resolve(process.cwd(), 'public/index.html'),
       filename: 'index.html',
       //   hash: true,
     }),

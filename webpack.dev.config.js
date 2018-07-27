@@ -1,4 +1,4 @@
-// const path = require('path');
+const path = require('path');
 const webpack = require('webpack'); // 用于访问内置插件
 
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 8000;
@@ -10,15 +10,18 @@ module.exports = {
   //   entry: ['./src/index.js', 'webpack-hot-middleware/client'],
   devtool: 'cheap-module-eval-source-map',
   devServer: {
-    contentBase: false,
+    // contentBase: false,
     host: '0.0.0.0',
-    // contentBase: process.env.CONTENT_BASE || path.resolve(process.cwd(), 'dist'),
+    // disableHostCheck: true,
+    contentBase: path.resolve(process.cwd(), 'public'),
     publicPath: '/',
     port: DEFAULT_PORT,
     hot: true,
-    // compress: true,
-    // historyApiFallback: true,
-    // inline: true,
+    compress: true,
+    historyApiFallback: true,
+    inline: true,
+    open: true,
+    // progress: true,
   },
   watch: true, // 只有在开启监听模式时，watchOptions才有意义
   watchOptions: {

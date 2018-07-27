@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
   other = prod;
 }
 
-// console.log(base);
+// console.log(other);
 // console.log(merge(base, other));
 
 const mergeConf = merge(base, other);

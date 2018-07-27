@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -6,7 +7,7 @@ module.exports = {
   mode: 'production',
   devtool: 'none',
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin([path.resolve(process.cwd(), 'dist')]),
     new UglifyJSPlugin({
       uglifyOptions: {
         compress: {
@@ -20,5 +21,6 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
     }),
+
   ],
 };
