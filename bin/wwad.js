@@ -2,28 +2,30 @@
 
 // const path = require('path');
 const program = require('commander');
-const Wad = require('../libs/wwad');
+const Wwad = require('../libs/wwad');
 
 program
 // 获得版本
   .version(require('../package').version)
-  .usage('<command> [options]');
+  .usage('<command> [options...]');
 
 program
   .command('start')
   .alias('s')
   .description('开发模式')
   .option('-p, --port [number]', '设置服务端口')
+  .option('-c, --cwd [string]', '设置cwd路径')
   .action((options) => {
-    new Wad(options).start();
+    new Wwad(options).start();
   });
 
 program
   .command('build')
   .alias('d')
   .description('生产模式')
+  .option('-c, --cwd [string]', '设置cwd路径')
   .action((options) => {
-    new Wad(options).build();
+    new Wwad(options).build();
   });
 
 

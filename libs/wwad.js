@@ -4,11 +4,11 @@
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server/lib/Server');
 
-const path = require('path');
+// const path = require('path');
 const chalk = require('chalk');
 const os = require('os');
 const debug = require('debug');
-const webpackConfig = require('../webpack.config');
+const getWebpackConfig = require('./webpack');
 
 
 function OS_check() {
@@ -31,10 +31,18 @@ function OS_check() {
   return true;
 }
 
-class Wwas {
+class Wwad {
   constructor(options) {
     this.options = options;
-    this.projectPath = path.resolve('./');
+    const { port, cwd } = options;
+    this.opt = {
+      port,
+      cwd,
+      env: process.env.NODE_ENV,
+    };
+
+    console.log(this.opt);
+
 
     process.env.CONTENT_BASE = this.projectPath;
 
@@ -46,62 +54,50 @@ class Wwas {
       process.exit(1);
     }
     // End 判断node版本和OS升级提示
+
+
+    // console.log('__dirname ===>', __dirname);
+    // console.log('process.cwd() ===>', process.cwd());
+    // console.log('require.resolve===>', require.resolve);
   }
 
   build() {
-    console.log(this.projectPath);
-
-    webpack(webpackConfig);
+    const compiler = webpack(getWebpackConfig(this.opt));
+    compiler.run((err, stats) => {
+      console.log(err, stats);
+    });
   }
 
 
   start() {
-    // const args = process.argv.slice(3);
-    console.log(this.projectPath);
-
-    // console.log(webpackConfig);
-
-
-    const server = new WebpackDevServer(webpack(webpackConfig));
-
-
-    server.listen(webpackConfig.devServer.port, webpackConfig.devServer.host, (err) => {
-      if (err) throw err;
-      // reportReadiness(uri, webpackConfig);
-    });
-    // console.log(server);
-
-    // console.log(process.env);
-    // console.log(process.env.PORT);
-
-    // console.log(process.env.CONTENT_BASE);
-
-    // CONTENT_BASE PORT
-    // const wds = spawn('ls', ['-l']);
-
-    // TODO
-    // process.env.PORT 和 contBase变量 无效，webpack-dev-server 找不到工作目录
-
-    // const wds = spawn('webpack-dev-server', [], {
-    //   stdio: 'inherit',
-    // });
-
-    // wds.stdout.on('data', (data) => {
-    //   console.log(`stdout: ${data}`);
-    // });
-
-    // wds.stderr.on('data', (data) => {
-    //   console.log(`stderr: ${data}`);
-    // });
-
-    // wds.on('close', (code) => {
-    //   console.log(`child process exited with code ${code}`);
-    // });
     // console.log(this.options);
 
-    // console.log(process.cwd());
-    // console.log(path.resolve('./'));
+    const webpackConfig = getWebpackConfig(this.opt);
+
+    const DEFAULT_PORT = parseInt(this.opt.port, 10) || 8000;
+
+    // 通过WebpackDevServer实例化的时候，不要将 dev server 选项放在 webpack 配置对象(webpack config object)中。而是，在创建选项时，将其作为第二个参数传递。
+    // https://webpack.docschina.org/guides/hot-module-replacement#%E9%80%9A%E8%BF%87-node-js-api
+    const WebpackDevServerOptions = {
+      // contentBase: false,
+      host: '0.0.0.0',
+      // disableHostCheck: true,
+      // contentBase: path.resolve(process.cwd(), 'public'),
+      // publicPath: '/',
+      port: DEFAULT_PORT,
+      hot: true,
+      compress: true,
+      historyApiFallback: true,
+      // inline: true,
+      // open: true,
+      progress: true,
+    };
+    WebpackDevServer.addDevServerEntrypoints(webpackConfig, WebpackDevServerOptions);
+    const server = new WebpackDevServer(webpack(webpackConfig), WebpackDevServerOptions);
+    server.listen(WebpackDevServerOptions.port, WebpackDevServerOptions.host, (err) => {
+      if (err) throw err;
+    });
   }
 }
 
-module.exports = Wwas;
+module.exports = Wwad;
