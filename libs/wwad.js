@@ -88,8 +88,7 @@ class Wwad {
       hot: true,
       compress: true,
       historyApiFallback: true,
-      // inline: true,
-      // open: true,
+      inline: true,
       progress: true,
     };
     WebpackDevServer.addDevServerEntrypoints(webpackConfig, WebpackDevServerOptions);
