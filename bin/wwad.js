@@ -2,7 +2,7 @@
 
 // const path = require('path');
 const program = require('commander');
-const Wwad = require('../libs/wwad');
+const Wwad = require('../lib/wwad');
 
 program
 // 获得版本

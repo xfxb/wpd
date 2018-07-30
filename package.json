@@ -7,6 +7,9 @@
     "wwad": "./bin/wwad.js"
   },
   "scripts": {
+    "clean": "rimraf lib",
+    "build": "npm run clean && babel src -d lib",
+    "watch": "babel src --out-dir lib -w",
     "release:major": "npm version major && git push --follow-tags && npm publish --tag beta",
     "release:minor": "npm version minor && git push --follow-tags && npm publish --tag beta",
     "release:patch": "npm version patch && git push --follow-tags && npm publish --tag beta"
@@ -22,7 +25,8 @@
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.6.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.1.0"
+    "eslint-plugin-react": "^7.1.0",
+    "rimraf": "^2.6.2"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
