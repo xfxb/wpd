@@ -1,6 +1,6 @@
 {
   "name": "wwad",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "webapck ant.design dva build",
   "main": "index.js",
   "bin": {
