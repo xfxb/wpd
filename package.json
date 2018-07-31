@@ -10,9 +10,9 @@
     "clean": "rimraf lib",
     "build": "npm run clean && babel src -d lib",
     "watch": "babel src --out-dir lib -w",
-    "release:major": "npm version major && git push --follow-tags && npm publish --tag beta",
-    "release:minor": "npm version minor && git push --follow-tags && npm publish --tag beta",
-    "release:patch": "npm version patch && git push --follow-tags && npm publish --tag beta"
+    "major": "npm version major && git push --follow-tags && npm publish --tag beta",
+    "minor": "npm version minor && git push --follow-tags && npm publish --tag beta",
+    "patch": "npm version patch && git push --follow-tags && npm publish --tag beta"
   },
   "author": "maiyan",
   "license": "ISC",
