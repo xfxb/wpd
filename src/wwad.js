@@ -75,14 +75,10 @@ class Wwad {
       cwd: thisCwd,
     };
 
-
-    // 如果设置文件有设置html
-    if (configJsObj.html) {
-      this.opt.html.template = path.resolve(thisCwd, configJs_mergeObj.html.template);
-      // 假如配置文件没有设置filename
-      if (!configJsObj.html.filename) {
-        this.opt.html.filename = 'index.html';
-      }
+    this.opt.html.template = path.resolve(thisCwd, configJs_mergeObj.html.template);
+    // 假如配置文件没有设置filename
+    if (!configJs_mergeObj.html.filename) {
+      this.opt.html.filename = 'index.html';
     }
 
     // env: process.env.NODE_ENV,

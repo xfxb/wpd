@@ -41,7 +41,7 @@ dva (v1 - v2)
         "build": "cross-env API_ENV=qa002 wwad build"
     }
     ```
-4. 运行 `npm run start`
+4. 运行 `npm run start`
 
 ## 配置文件 wwad.config.js
 
