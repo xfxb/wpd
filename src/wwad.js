@@ -53,13 +53,13 @@ class Wwad {
     };
     const { port, cwd } = options;
 
-    const public_path = cwd || process.cwd();
-    const configjs = path.resolve(public_path, './wwad.config.js');
-    let configJsObj = null;
+    let configJsObj = null; // 配置文件对象
+    let configJs_mergeObj = null; // 合并后的配置文件对象
 
+    const configjs = path.resolve(cwd || process.cwd(), './wwad.config.js');
     if (isFsExistsSync(configjs)) {
-      const config = require(configjs); // eslint-disable-line
-      configJsObj = Object.assign(defaultOpt, config);
+      configJsObj = require(configjs); // eslint-disable-line
+      configJs_mergeObj = Object.assign(defaultOpt, configJsObj);
       // console.log(configJsObj);
     }
 
@@ -70,7 +70,7 @@ class Wwad {
     const thisCwd = cwd || process.cwd();
 
     this.opt = {
-      ...configJsObj,
+      ...configJs_mergeObj,
       port: parseInt(port, 10) || 8000,
       cwd: thisCwd,
     };
@@ -78,7 +78,7 @@ class Wwad {
 
     // 如果设置文件有设置html
     if (configJsObj.html) {
-      this.opt.html.template = path.resolve(thisCwd, configJsObj.html.template);
+      this.opt.html.template = path.resolve(thisCwd, configJs_mergeObj.html.template);
       // 假如配置文件没有设置filename
       if (!configJsObj.html.filename) {
         this.opt.html.filename = 'index.html';
