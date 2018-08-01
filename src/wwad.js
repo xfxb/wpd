@@ -1,7 +1,7 @@
 
-// const spawn = require('cross-spawn');
-// import { fork } from 'child_process';
 const webpack = require('webpack');
+// const fs = require('fs');
+const path = require('path');
 const WebpackDevServer = require('webpack-dev-server/lib/Server');
 
 // const path = require('path');
@@ -9,6 +9,8 @@ const chalk = require('chalk');
 const os = require('os');
 const debug = require('debug');
 const getWebpackConfig = require('./webpack');
+
+const { isFsExistsSync } = require('./utils');
 
 
 function OS_check() {
@@ -31,40 +33,70 @@ function OS_check() {
   return true;
 }
 
+
 class Wwad {
   constructor(options) {
-    this.options = options;
-    const { port, cwd } = options;
-    this.opt = {
-      port,
-      cwd,
-      env: process.env.NODE_ENV,
-    };
-
-    console.log(this.opt);
-
-
-    process.env.CONTENT_BASE = this.projectPath;
-
-    // const script = process.argv[2];
-    // const args = process.argv.slice(3);
-
-    // start 判断node版本和OS升级提示
+    // 判断node版本和OS升级提示
     if (!OS_check()) {
       process.exit(1);
     }
-    // End 判断node版本和OS升级提示
+    const defaultOpt = {
+      port: 8000,
+      cwd: undefined,
+      ableCSSModules: true,
+      theme: null,
+      define: null,
+      html: {
+        template: './public/index.html',
+        filename: 'index.html',
+      },
+    };
+    const { port, cwd } = options;
 
+    const public_path = cwd || process.cwd();
+    const configjs = path.resolve(public_path, './wwad.config.js');
+    let configJsObj = null;
+
+    if (isFsExistsSync(configjs)) {
+      const config = require(configjs); // eslint-disable-line
+      configJsObj = Object.assign(defaultOpt, config);
+      // console.log(configJsObj);
+    }
 
     // console.log('__dirname ===>', __dirname);
     // console.log('process.cwd() ===>', process.cwd());
     // console.log('require.resolve===>', require.resolve);
+
+    const thisCwd = cwd || process.cwd();
+
+    this.opt = {
+      ...configJsObj,
+      port: parseInt(port, 10) || 8000,
+      cwd: thisCwd,
+    };
+
+
+    // 如果设置文件有设置html
+    if (configJsObj.html) {
+      this.opt.html.template = path.resolve(thisCwd, configJsObj.html.template);
+      // 假如配置文件没有设置filename
+      if (!configJsObj.html.filename) {
+        this.opt.html.filename = 'index.html';
+      }
+    }
+
+    // env: process.env.NODE_ENV,
+
+    console.log(this.opt);
   }
 
   build() {
-    const compiler = webpack(getWebpackConfig(this.opt));
-    compiler.run((err, stats) => {
-      console.log(err, stats);
+    const compiler = webpack(getWebpackConfig(this.opt, 'build'));
+    compiler.run((err) => {
+      if (err) {
+        throw err;
+      }
+      // console.log(err, stats);
     });
   }
 
@@ -72,9 +104,10 @@ class Wwad {
   start() {
     // console.log(this.options);
 
-    const webpackConfig = getWebpackConfig(this.opt);
+    const webpackConfig = getWebpackConfig(this.opt, 'start');
 
-    const DEFAULT_PORT = parseInt(this.opt.port, 10) || 8000;
+    // console.log(typeof this.opt.port);
+
 
     // 通过WebpackDevServer实例化的时候，不要将 dev server 选项放在 webpack 配置对象(webpack config object)中。而是，在创建选项时，将其作为第二个参数传递。
     // https://webpack.docschina.org/guides/hot-module-replacement#%E9%80%9A%E8%BF%87-node-js-api
@@ -84,7 +117,7 @@ class Wwad {
       // disableHostCheck: true,
       // contentBase: path.resolve(process.cwd(), 'public'),
       // publicPath: '/',
-      port: DEFAULT_PORT,
+      port: this.opt.port,
       hot: true,
       compress: true,
       historyApiFallback: true,

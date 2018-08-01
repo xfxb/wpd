@@ -13,7 +13,7 @@ program
   .command('start')
   .alias('s')
   .description('开发模式')
-  .option('-p, --port [number]', '设置服务端口')
+  .option('-p, --port [string]', '设置开发模式的预览服务端口')
   .option('-c, --cwd [string]', '设置cwd路径')
   .action((options) => {
     new Wwad(options).start();

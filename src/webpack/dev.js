@@ -4,8 +4,8 @@ const webpack = require('webpack'); // 用于访问内置插件
 function getDevConf() {
   return {
     mode: 'development',
-    //   entry: ['./src/index.js', 'webpack-hot-middleware/client'],
-    // devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-eval-source-map',
+    // devtool: 'cheap-source-map',
     watch: true, // 只有在开启监听模式时，watchOptions才有意义
     watchOptions: {
       ignored: /node_modules/,
