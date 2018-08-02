@@ -1,4 +1,4 @@
-# wwad 类似roadhog的构建工具
+# wpd 类似roadhog的构建工具
 
 ## 说明
 
@@ -76,6 +76,12 @@ dva (v1 - v2)
 ### wwad build 生产模式
 
 - `-c` 设置项目路径
+
+## npm包二次开发
+
+- 调试模式 `npm run watch` 在内存中从src编译到lib，监听文件改动
+
+- 生产模式 `npm run build` 从src实际构建到lib
 
 ## 参考，感谢
 
