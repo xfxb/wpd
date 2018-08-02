@@ -2,7 +2,7 @@
 
 // const path = require('path');
 const program = require('commander');
-const Wwad = require('../lib/wpd');
+const Wpd = require('../lib/wpd');
 
 program
 // 获得版本
@@ -16,7 +16,7 @@ program
   .option('-p, --port [string]', '设置开发模式的预览服务端口')
   .option('-c, --cwd [string]', '设置cwd路径')
   .action((options) => {
-    new Wwad(options).start();
+    new Wpd(options).start();
   });
 
 program
@@ -25,7 +25,7 @@ program
   .description('生产模式')
   .option('-c, --cwd [string]', '设置cwd路径')
   .action((options) => {
-    new Wwad(options).build();
+    new Wpd(options).build();
   });
 
 

@@ -16,9 +16,9 @@ dva (v1 - v2)
 
 ## 快速使用
 
-1. 运行 `npm i wwad -D` 进行安装。
+1. 运行 `npm i wpd -D` 进行安装。
 
-2. 在项目目录建立 `wwad.config.js` 文件，并且设置需要的参数。
+2. 在项目目录建立 `wpd.config.js` 文件，并且设置需要的参数。
 
     例如：
     ```js
@@ -37,13 +37,13 @@ dva (v1 - v2)
     例如：
     ```js
     "scripts": {
-        "start": "cross-env API_ENV=qa002 wwad start -p 8002",
-        "build": "cross-env API_ENV=qa002 wwad build"
+        "start": "cross-env API_ENV=qa002 wpd start -p 8002",
+        "build": "cross-env API_ENV=qa002 wpd build"
     }
     ```
 4. 运行 `npm run start`
 
-## 配置文件 wwad.config.js
+## 配置文件 wpd.config.js
 
 | 参数 | 是否必填 | 值类型 | 默认值 | 说明 |
 | --- | --- | --- | --- | --- |
@@ -67,13 +67,13 @@ dva (v1 - v2)
 
 ## 命令
 
-### wwad start 开发模式
+### wpd start 开发模式
 
 - `-p` 设置开发模式的预览服务端口
 
 - `-c` 设置项目路径
 
-### wwad build 生产模式
+### wpd build 生产模式
 
 - `-c` 设置项目路径
 

@@ -34,7 +34,7 @@ function OS_check() {
 }
 
 
-class Wwad {
+class Wpd {
   constructor(options) {
     // 判断node版本和OS升级提示
     if (!OS_check()) {
@@ -54,7 +54,7 @@ class Wwad {
     let configJsObj = null; // 配置文件对象
     let configJs_mergeObj = null; // 合并后的配置文件对象
 
-    const configjs = path.resolve(cwd || process.cwd(), './wwad.config.js');
+    const configjs = path.resolve(cwd || process.cwd(), './wpd.config.js');
     const thisCwd = cwd || process.cwd();
 
 
@@ -138,4 +138,4 @@ class Wwad {
   }
 }
 
-module.exports = Wwad;
+module.exports = Wpd;
