@@ -41,7 +41,7 @@ function getBaseConf(opt) {
 
 
   return {
-    entry: ['babel-polyfill', path.resolve(opt.cwd, 'src/index.js')],
+    entry: [path.resolve(opt.cwd, 'src/index.js')],
     output: {
       path: path.resolve(opt.cwd, 'dist'),
       filename: 'index.[hash:8].js',
@@ -82,7 +82,20 @@ function getBaseConf(opt) {
               ],
               env: {
                 development: {
-                  plugins: [require.resolve('babel-plugin-dva-hmr')],
+                  plugins: [
+                    [
+                      require.resolve('babel-plugin-react-transform'), {
+                        transforms: [{
+                          transform: require.resolve('react-transform-catch-errors'),
+                          imports: [
+                            path.join(opt.cwd, 'node_modules/react'),
+                            path.join(opt.cwd, 'node_modules/redbox-react'),
+                          ],
+                        }],
+                      },
+                    ],
+                    require.resolve('babel-plugin-dva-hmr'),
+                  ],
                 },
               },
               plugins: [
