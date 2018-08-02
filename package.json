@@ -1,6 +1,6 @@
 {
   "name": "wpd",
-  "version": "0.1.14-3",
+  "version": "0.1.14-4",
   "description": "webapck ant.design dva build",
   "main": "bin/wpd.js",
   "bin": {
