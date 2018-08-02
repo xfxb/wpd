@@ -41,8 +41,6 @@ class Wwad {
       process.exit(1);
     }
     const defaultOpt = {
-      port: 8000,
-      cwd: undefined,
       ableCSSModules: true,
       theme: null,
       define: null,
@@ -57,31 +55,43 @@ class Wwad {
     let configJs_mergeObj = null; // 合并后的配置文件对象
 
     const configjs = path.resolve(cwd || process.cwd(), './wwad.config.js');
+    const thisCwd = cwd || process.cwd();
+
+
     if (isFsExistsSync(configjs)) {
       configJsObj = require(configjs); // eslint-disable-line
       configJs_mergeObj = Object.assign(defaultOpt, configJsObj);
       // console.log(configJsObj);
+
+      const cmhObj = (configJs_mergeObj && configJs_mergeObj.html) || undefined;
+      this.opt = {
+        ableCSSModules: configJs_mergeObj.ableCSSModules,
+        theme: configJs_mergeObj.theme,
+        define: configJs_mergeObj.define,
+        html: {
+          template: (cmhObj && cmhObj.template) ? path.resolve(thisCwd, cmhObj.template) : path.resolve(thisCwd, './public/index.html'),
+          filename: (cmhObj && cmhObj.html) || 'index.html',
+        },
+      };
+    } else {
+      console.log('没有找到配置文件');
+      this.opt = {
+        ...defaultOpt,
+        html: {
+          template: path.resolve(thisCwd, './public/index.html'),
+          filename: 'index.html',
+        },
+      };
     }
+
+    this.opt.port = parseInt(port, 10) || 8000;
+    this.opt.cwd = thisCwd;
+
 
     // console.log('__dirname ===>', __dirname);
     // console.log('process.cwd() ===>', process.cwd());
     // console.log('require.resolve===>', require.resolve);
 
-    const thisCwd = cwd || process.cwd();
-
-    this.opt = {
-      ...configJs_mergeObj,
-      port: parseInt(port, 10) || 8000,
-      cwd: thisCwd,
-    };
-
-    this.opt.html.template = path.resolve(thisCwd, configJs_mergeObj.html.template);
-    // 假如配置文件没有设置filename
-    if (!configJs_mergeObj.html.filename) {
-      this.opt.html.filename = 'index.html';
-    }
-
-    // env: process.env.NODE_ENV,
 
     console.log(this.opt);
   }
