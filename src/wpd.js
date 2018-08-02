@@ -61,7 +61,6 @@ class Wpd {
     if (isFsExistsSync(configjs)) {
       configJsObj = require(configjs); // eslint-disable-line
       configJs_mergeObj = Object.assign(defaultOpt, configJsObj);
-      // console.log(configJsObj);
 
       const cmhObj = (configJs_mergeObj && configJs_mergeObj.html) || undefined;
       this.opt = {
@@ -97,6 +96,7 @@ class Wpd {
   }
 
   build() {
+    process.env.NODE_ENV = 'production';
     const compiler = webpack(getWebpackConfig(this.opt, 'build'));
     compiler.run((err) => {
       if (err) {
@@ -109,6 +109,7 @@ class Wpd {
 
   start() {
     // console.log(this.options);
+    process.env.NODE_ENV = 'development';
 
     const webpackConfig = getWebpackConfig(this.opt, 'start');
 

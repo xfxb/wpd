@@ -37,6 +37,8 @@ function getBaseConf(opt) {
     },
   ];
 
+  console.log('process.env.NODE_ENV ======>', process.env.NODE_ENV);
+
 
   return {
     entry: ['babel-polyfill', path.resolve(opt.cwd, 'src/index.js')],
@@ -61,7 +63,20 @@ function getBaseConf(opt) {
             options: {
               cacheDirectory: true,
               presets: [
-                require.resolve('babel-preset-env'),
+                [
+                  require.resolve('babel-preset-env'),
+                  {
+                    include: [],
+                    useBuiltIns: true,
+                    targets: {
+                      browsers: [
+                        // '> 1%',
+                        'last 2 versions',
+                        // 'ie >= 11',
+                      ],
+                    },
+                  },
+                ],
                 require.resolve('babel-preset-react'),
                 require.resolve('babel-preset-stage-0'),
               ],
@@ -71,13 +86,14 @@ function getBaseConf(opt) {
                 },
               },
               plugins: [
+                require.resolve('babel-plugin-transform-runtime'),
+                require.resolve('babel-plugin-add-module-exports'),
                 require.resolve('babel-plugin-react-require'),
                 require.resolve('babel-plugin-transform-decorators-legacy'),
-                require.resolve('babel-plugin-add-module-exports'),
                 require.resolve('babel-plugin-syntax-dynamic-import'),
+                require.resolve('babel-plugin-transform-object-rest-spread'), // 对象添加spread操作符
                 ['import', { libraryName: 'antd', style: true }],
                 // 'transform-class-properties',
-                // 'transform-object-rest-spread',
                 // 'array-includes',
               ],
             },
@@ -136,7 +152,7 @@ function getBaseConf(opt) {
             {
               loader: require.resolve('css-loader'),
             },
-            lessParam,
+            ...lessParam,
           ],
         },
         {
