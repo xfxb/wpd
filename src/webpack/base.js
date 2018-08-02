@@ -8,6 +8,36 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 function getBaseConf(opt) {
   // console.log(opt.theme);
   // console.log(opt.html);
+
+  const lessParam = [
+    {
+      loader: require.resolve('postcss-loader'),
+      options: {
+        browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4'],
+        cascade: true,
+        add: false,
+        remove: false,
+        support: true,
+        flexbox: true,
+        grid: true,
+        plugins: [
+          autoprefixer,
+        ],
+      },
+    },
+    {
+      loader: require.resolve('less-loader'),
+      options: {
+        sourceMap: true,
+        javascriptEnabled: true,
+        modifyVars: {
+          ...opt.theme,
+        },
+      },
+    },
+  ];
+
+
   return {
     entry: ['babel-polyfill', path.resolve(opt.cwd, 'src/index.js')],
     output: {
@@ -35,12 +65,16 @@ function getBaseConf(opt) {
                 require.resolve('babel-preset-react'),
                 require.resolve('babel-preset-stage-0'),
               ],
+              env: {
+                development: {
+                  plugins: [require.resolve('babel-plugin-dva-hmr')],
+                },
+              },
               plugins: [
                 require.resolve('babel-plugin-react-require'),
                 require.resolve('babel-plugin-transform-decorators-legacy'),
                 require.resolve('babel-plugin-add-module-exports'),
                 require.resolve('babel-plugin-syntax-dynamic-import'),
-                require.resolve('babel-plugin-dva-hmr'),
                 ['import', { libraryName: 'antd', style: true }],
                 // 'transform-class-properties',
                 // 'transform-object-rest-spread',
@@ -90,31 +124,7 @@ function getBaseConf(opt) {
                 localIdentName: '[path][name]__[local]--[hash:base64:5]',
               },
             },
-            {
-              loader: require.resolve('postcss-loader'),
-              options: {
-                browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4'],
-                cascade: true,
-                add: false,
-                remove: false,
-                support: true,
-                flexbox: true,
-                grid: true,
-                plugins: [
-                  autoprefixer,
-                ],
-              },
-            },
-            {
-              loader: require.resolve('less-loader'),
-              options: {
-                sourceMap: true,
-                javascriptEnabled: true,
-                modifyVars: {
-                  ...opt.theme,
-                },
-              },
-            },
+            ...lessParam,
           ],
         },
         // node_modules less
@@ -126,31 +136,7 @@ function getBaseConf(opt) {
             {
               loader: require.resolve('css-loader'),
             },
-            {
-              loader: require.resolve('postcss-loader'),
-              options: {
-                browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4'],
-                cascade: true,
-                add: false,
-                remove: false,
-                support: true,
-                flexbox: true,
-                grid: true,
-                plugins: [
-                  autoprefixer,
-                ],
-              },
-            },
-            {
-              loader: require.resolve('less-loader'),
-              options: {
-                sourceMap: true,
-                javascriptEnabled: true,
-                modifyVars: {
-                  ...opt.theme,
-                },
-              },
-            },
+            lessParam,
           ],
         },
         {
