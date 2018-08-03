@@ -16,7 +16,7 @@ dva (v1 - v2)
 
 ## 快速使用
 
-1. 运行 `npm i wpd -D` 进行安装。
+1. 运行 `npm i wpd redbox-react -D` 进行安装。
 
 2. 在项目目录建立 `wpd.config.js` 文件，并且设置需要的参数。
 
