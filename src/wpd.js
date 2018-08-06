@@ -1,16 +1,18 @@
 
-const webpack = require('webpack');
+import webpack from 'webpack';
+import path from 'path';
+import WebpackDevServer from 'webpack-dev-server/lib/Server';
+import chalk from 'chalk';
+import os from 'os';
+import { isFsExistsSync } from './utils';
+import getWebpackConfig from './webpack';
+
+
+const debug = require('debug')('wpd');
+
 // const fs = require('fs');
-const path = require('path');
-const WebpackDevServer = require('webpack-dev-server/lib/Server');
 
 // const path = require('path');
-const chalk = require('chalk');
-const os = require('os');
-const debug = require('debug');
-const getWebpackConfig = require('./webpack');
-
-const { isFsExistsSync } = require('./utils');
 
 
 function OS_check() {
@@ -20,9 +22,9 @@ function OS_check() {
   const minor = versions[1];
   const platform = os.platform();
 
-  if (((major * 10) + (minor * 1)) < 65) {
-    debug(chalk.red(`Node version (${major}.${minor}) is not compatibile, ${chalk.cyan('must >= 6.5')}.`), 'environment');
-    debug(chalk.red(`你的 Node 版本是 ${chalk.yellow(`${major}.${minor}`)}，请升级到${chalk.cyan(' 6.5 或以上')}.`, 'environment'));
+  if (((major * 10) + (minor * 1)) < 80) {
+    debug(chalk.red(`Node version (${major}.${minor}) is not compatibile, ${chalk.cyan('must >= 8.0')}.`), 'environment');
+    debug(chalk.red(`你的 Node 版本是 ${chalk.yellow(`${major}.${minor}`)}，请升级到${chalk.cyan(' 8.0 或以上')}.`, 'environment'));
     if (platform === 'darwin') {
       debug(`推荐用 ${chalk.cyan('https://github.com/creationix/nvm')} 管理和升级你的 node 版本。`, 'environment');
     } else if (platform === 'win32') {
@@ -36,10 +38,6 @@ function OS_check() {
 
 class Wpd {
   constructor(options) {
-    // 判断node版本和OS升级提示
-    if (!OS_check()) {
-      process.exit(1);
-    }
     const defaultOpt = {
       ableCSSModules: true,
       theme: null,
@@ -50,12 +48,23 @@ class Wpd {
       },
     };
     const { port, cwd } = options;
+    const thisCwd = cwd || process.cwd();
 
     let configJsObj = null; // 配置文件对象
     let configJs_mergeObj = null; // 合并后的配置文件对象
 
-    const configjs = path.resolve(cwd || process.cwd(), './wpd.config.js');
-    const thisCwd = cwd || process.cwd();
+    const configjs = path.resolve(thisCwd, './wpd.config.js');
+
+    // 判断node版本和OS升级提示
+    if (!OS_check()) {
+      process.exit(1);
+    }
+
+    // 判断redbox-react是否已经安装
+    if (!isFsExistsSync(path.resolve(thisCwd, 'node_modules/redbox-react/package.json'))) {
+      console.error(`${chalk.red('还没有安装 redbox-react')} 请运行 ${chalk.cyan('npm i redbox-react -D')} 进行安装`);
+      process.exit(1);
+    }
 
 
     if (isFsExistsSync(configjs)) {
@@ -73,7 +82,7 @@ class Wpd {
         },
       };
     } else {
-      console.log('没有找到配置文件');
+      console.log(chalk.red('没有找到配置文件'), 'environment');
       this.opt = {
         ...defaultOpt,
         html: {
@@ -92,7 +101,8 @@ class Wpd {
     // console.log('require.resolve===>', require.resolve);
 
 
-    console.log(this.opt);
+    console.log(chalk.cyan('============= 当前配置 ============= '));
+    console.log(chalk.cyan(JSON.stringify(this.opt, null, 4)));
   }
 
   build() {
@@ -140,3 +150,30 @@ class Wpd {
 }
 
 module.exports = Wpd;
+
+
+// entry
+// theme
+// define
+// externals
+// alias
+// extraResolveExtensions
+// browserslist
+// publicPath
+// outputPath
+// devtool
+// commons
+// hash
+// html
+// disableCSSModules
+// disableCSSSourceMap
+// extraBabelPresets
+// extraBabelPlugins
+// extraBabelIncludes
+// copy
+// proxy
+// sass
+// manifest
+// ignoreMomentLocale
+// disableDynamicImport
+// env

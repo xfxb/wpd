@@ -83,6 +83,12 @@ dva (v1 - v2)
 
 - 生产模式 `npm run build` 从src实际构建到lib
 
+## 疑答
+
+### redbox-react 为什么一定要安装
+
+因为babel-plugin-dva-hmr@0.4.1依赖redbox-react，引用的模块路径是项目路径。
+
 ## 参考，感谢
 
 [roadhog](https://github.com/sorrycc/roadhog)

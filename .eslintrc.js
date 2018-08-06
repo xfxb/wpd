@@ -1,10 +1,6 @@
 module.exports = {
     "parser": "babel-eslint",
     "extends": "airbnb",
-    "globals": {
-      "document": true,
-      "window": true
-    },
     "rules": {
       "arrow-body-style": [0],
       "consistent-return": [0],
@@ -23,7 +19,8 @@ module.exports = {
       "no-use-before-define": [0],
       "max-len": [0],
       "jsx-a11y/label-has-for": [0],
-      "camelcase": [0]
+      "camelcase": [0],
+      "no-console": 0
     },
     "parserOptions": {
       "ecmaFeatures": {

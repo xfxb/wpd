@@ -1,4 +1,4 @@
-const webpack = require('webpack'); // 用于访问内置插件
+import webpack from 'webpack';
 
 
 function getDevConf() {

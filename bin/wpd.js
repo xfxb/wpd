@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 
-// const path = require('path');
 const program = require('commander');
 const Wpd = require('../lib/wpd');
 
 program
-// 获得版本
   .version(require('../package').version)
   .usage('<command> [options...]');
 

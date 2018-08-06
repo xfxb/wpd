@@ -1,14 +1,15 @@
-const merge = require('webpack-merge');// 用来合并配置文件
-// const path = require('path');
-const getBaseConf = require('./base');
-const getDevConf = require('./dev');
-const getProdConf = require('./prod');
+import merge from 'webpack-merge';
+import chalk from 'chalk';
+import getBaseConf from './base';
+import getDevConf from './dev';
+import getProdConf from './prod';
 
 
 function getWebpackConfig(opt, cmd) {
   const customConf = cmd === 'start' ? getDevConf(opt) : getProdConf(opt);
 
   const mergeConf = merge(getBaseConf(opt), customConf);
+  console.log(chalk.cyan(`process.env.NODE_ENV => ${process.env.NODE_ENV}`));
 
   // const envArray = Object.keys(process.env).filter(item => /.*_ENV/g.test(item) && item !== 'NODE_ENV');
   // DefinePlugin 设置 自定义变量

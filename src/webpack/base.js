@@ -1,7 +1,7 @@
-const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const autoprefixer = require('autoprefixer');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import autoprefixer from 'autoprefixer';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 // console.log(path.resolve(process.cwd(), './public/index.html'));
 // console.log(path.resolve(process.cwd(), 'src/index.js'));
@@ -37,8 +37,6 @@ function getBaseConf(opt) {
     },
   ];
 
-  console.log('process.env.NODE_ENV ======>', process.env.NODE_ENV);
-
 
   return {
     entry: [path.resolve(opt.cwd, 'src/index.js')],
@@ -49,7 +47,7 @@ function getBaseConf(opt) {
     },
     resolve: {
       // 引入模块的时候，可以不用扩展名
-      extensions: ['.js', '.less', '.json', '.css'],
+      extensions: ['.js', '.less', '.css', '.json'],
     },
     devtool: 'cheap-module-eval-source-map',
     module: {
@@ -57,7 +55,6 @@ function getBaseConf(opt) {
         {
           test: /\.js$/,
           include: path.join(opt.cwd, 'src'),
-          exclude: /node_modules/,
           use: {
             loader: require.resolve('babel-loader'),
             options: {
@@ -114,11 +111,13 @@ function getBaseConf(opt) {
         },
         {
           test: /\.css$/,
+          include: path.join(opt.cwd, 'src'),
           use: [
             require.resolve('style-loader'),
             {
               loader: require.resolve('css-loader'),
               options: {
+                minimize: true,
                 modules: opt.ableCSSModules,
                 localIdentName: '[path][name]__[local]--[hash:base64:5]',
               },
@@ -143,12 +142,12 @@ function getBaseConf(opt) {
         {
           test: /\.less$/,
           include: path.join(opt.cwd, 'src'),
-          exclude: /node_modules/,
           use: [
             require.resolve('style-loader'),
             {
               loader: require.resolve('css-loader'),
               options: {
+                minimize: true,
                 modules: opt.ableCSSModules,
                 localIdentName: '[path][name]__[local]--[hash:base64:5]',
               },
@@ -164,6 +163,9 @@ function getBaseConf(opt) {
             require.resolve('style-loader'),
             {
               loader: require.resolve('css-loader'),
+              options: {
+                minimize: true,
+              },
             },
             ...lessParam,
           ],
@@ -174,12 +176,13 @@ function getBaseConf(opt) {
         },
         {
           test: /\.(png|jpg|gif|svg|bmp|eot|woff|woff2|ttf)/,
+          include: path.join(opt.cwd, 'src'),
           use: {
             loader: require.resolve('url-loader'),
             options: {
               limit: 5 * 1024,
               outputPath: '',
-              name: 'images/[name].[hash:8].[ext]',
+              name: 'static/[name].[hash:8].[ext]',
             },
           },
         },
