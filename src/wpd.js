@@ -78,7 +78,7 @@ class Wpd {
         define: configJs_mergeObj.define,
         html: {
           template: (cmhObj && cmhObj.template) ? path.resolve(thisCwd, cmhObj.template) : path.resolve(thisCwd, './public/index.html'),
-          filename: (cmhObj && cmhObj.html) || 'index.html',
+          filename: (cmhObj && cmhObj.filename) || 'index.html',
         },
       };
     } else {

@@ -1,35 +1,57 @@
 #!/usr/bin/env node
+const { resolve, join } = require('path');
+const { existsSync } = require('fs');
 
-const program = require('commander');
-const Wpd = require('../lib/wpd');
+const getConfig = require('../lib/getConfig');
 
-program
-  .version(require('../package').version)
-  .usage('<command> [options...]');
+const cwd = process.env.cwd || process.cwd();
 
-program
-  .command('start')
-  .alias('s')
-  .description('开发模式')
-  .option('-p, --port [string]', '设置开发模式的预览服务端口')
-  .option('-c, --cwd [string]', '设置cwd路径')
-  .action((options) => {
-    new Wpd(options).start();
+function getWebpackConfig() {
+  const configFile = 'wpd.config.js';
+
+  const jsRCFile = resolve(cwd, configFile);
+  let config = {};
+
+  if (existsSync(jsRCFile)) {
+    // no cache
+    delete require.cache[jsRCFile];
+    config = require(jsRCFile); // eslint-disable-line
+    if (config.default) {
+      config = config.default;
+    }
+  }
+
+
+  return getConfig.default({
+    ...config,
+    html: {
+      template: (config.html && config.html.template) ? join(cwd, config.html.template) : join(cwd, './public/index.html'),
+      filename: (config.html && config.html.filename) || 'index.html',
+    },
+    cwd,
+    // entry: {
+    //   index: './index.js',
+    // },
   });
-
-program
-  .command('build')
-  .alias('d')
-  .description('生产模式')
-  .option('-c, --cwd [string]', '设置cwd路径')
-  .action((options) => {
-    new Wpd(options).build();
-  });
+}
 
 
-program.parse(process.argv);
-
-// 如果什么都没输，直接显示 帮助
-if (!process.argv.slice(2).length) {
-  program.outputHelp();
+switch (process.argv[2]) {
+  case 'dev':
+    process.env.NODE_ENV = 'development';
+    require('../dev').default({
+      cwd,
+      webpackConfig: getWebpackConfig(),
+    });
+    break;
+  case 'build':
+    process.env.NODE_ENV = 'production';
+    require('../build').default({
+      cwd,
+      webpackConfig: getWebpackConfig(),
+    });
+    break;
+  default:
+    console.error(`Unknown command ${process.argv[2]}`);
+    process.exit(1);
 }
