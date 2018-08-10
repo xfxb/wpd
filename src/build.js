@@ -3,7 +3,6 @@ import rimraf from 'rimraf';
 
 
 export default function build(opts = {}) {
-  // process.env.NODE_ENV = 'production';
 
   const { webpackConfig } = opts;
 
@@ -11,6 +10,8 @@ export default function build(opts = {}) {
   rimraf.sync(webpackConfig.output.path);
 
   webpack(webpackConfig, (err, stats) => {
-    console.error(err, stats);
+    if(err){
+      console.error(err, stats);
+    }
   });
 }

@@ -3,12 +3,6 @@ export default function (webpackConfig, opts) {
     .devtool(opts.devtool || 'cheap-module-eval-source-map')
     .output.pathinfo(true);
 
-  // webpackConfig
-  //   .plugin('hmr')
-  //   .use(require('webpack/lib/HotModuleReplacementPlugin'));
-  // console.log(opts.html);
-
-
   webpackConfig
     .plugin('system-bell')
     .use(require('system-bell-webpack-plugin'));

@@ -37,11 +37,11 @@ dva (v1 - v2)
     例如：
     ```js
     "scripts": {
-        "start": "cross-env API_ENV=qa002 wpd start -p 8002",
+        "dev": "cross-env API_ENV=qa002 wpd dev",
         "build": "cross-env API_ENV=qa002 wpd build"
     }
     ```
-4. 运行 `npm run start`
+4. 运行 `npm run dev`
 
 ## 配置文件 wpd.config.js
 
@@ -67,15 +67,9 @@ dva (v1 - v2)
 
 ## 命令
 
-### wpd start 开发模式
-
-- `-p` 设置开发模式的预览服务端口
-
-- `-c` 设置项目路径
+### wpd dev 开发模式
 
 ### wpd build 生产模式
-
-- `-c` 设置项目路径
 
 ## npm包二次开发
 

@@ -1,6 +1,5 @@
 import { extname } from 'path';
 import autoprefixer from 'autoprefixer';
-import normalizeTheme from './normalizeTheme';
 
 const DEFAULT_BROWSERS = [
   '>1%',
@@ -30,7 +29,6 @@ export default function (webpackConfig, opts) {
       }),
     ...(opts.cssLoaderOptions || {}),
   };
-  const theme = normalizeTheme(opts.theme);
   const postcssOptions = {
     // Necessary for external CSS imports to work
     // https://github.com/facebookincubator/create-react-app/issues/2677
@@ -51,7 +49,7 @@ export default function (webpackConfig, opts) {
       : '[local]___[hash:base64:5]',
   };
   const lessOptions = {
-    modifyVars: theme,
+    modifyVars: opts.theme || {},
     javascriptEnabled: true,
     ...(opts.lessLoaderOptions || {}),
   };

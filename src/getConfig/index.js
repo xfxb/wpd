@@ -1,12 +1,10 @@
 import Config from 'webpack-chain';
 import {
-  join, dirname, resolve, relative,
+  join, resolve, relative,
 } from 'path';
 import { existsSync } from 'fs';
-import assert from 'assert';
-// import { getPkgPath, shouldTransform } from './es5ImcompatibleVersions';
+// import assert from 'assert';
 import resolveDefine from './resolveDefine';
-import { applyWebpackConfig } from './applyWebpackConfig';
 
 function makeArray(item) {
   if (Array.isArray(item)) return item;
@@ -42,29 +40,23 @@ export default function (opts) {
     .devtoolModuleFilenameTemplate(info => relative(opts.cwd, info.absoluteResourcePath).replace(/\\/g, '/'));
 
   // resolve
-  // webpackConfig.resolve
-  //   .set('symlinks', false)
-  //   .modules.add('node_modules')
-  //   .add(join(__dirname, '../../node_modules'))
-  //   .end()
-  //   .extensions.merge([
-  //     '.web.js',
-  //     '.mjs',
-  //     '.js',
-  //     '.json',
-  //     '.web.jsx',
-  //     '.jsx',
-  //     '.web.ts',
-  //     '.ts',
-  //     '.web.tsx',
-  //     '.tsx',
-  //   ])
-  //   .end()
-  //   .alias // .set('@', api.resolve('src'))
-  //   .set(
-  //     '@babel/runtime',
-  //     dirname(require.resolve('@babel/runtime/package.json')),
-  //   );
+  webpackConfig.resolve
+    .set('symlinks', false)
+    .modules.add('node_modules')
+    .add(join(__dirname, '../../node_modules'))
+    .end()
+    .extensions.merge([
+      '.web.js',
+      '.mjs',
+      '.js',
+      '.json',
+      '.web.jsx',
+      '.jsx',
+      '.web.ts',
+      '.ts',
+      '.web.tsx',
+      '.tsx',
+    ]);
 
   if (opts.alias) {
     for (const key in opts.alias) {
@@ -112,7 +104,7 @@ export default function (opts) {
   const babelOptsCommon = {
     cacheDirectory: process.env.BABEL_CACHE !== 'none', // enable by default
     babelrc: !!process.env.BABELRC, // disable by default
-    ...require('./babel-preset-umi.js').default(null, opts),
+    ...require('./babelPreset.js').default(null, opts),
   };
   const babel = opts.babel || {};
   const babelOpts = {
@@ -256,5 +248,5 @@ export default function (opts) {
   //   opts.chainConfig(webpackConfig);
   // }
 
-  return applyWebpackConfig(opts.cwd, webpackConfig.toConfig());
+  return webpackConfig.toConfig();
 }
