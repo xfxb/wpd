@@ -4,8 +4,6 @@ const env = process.env.NODE_ENV;
 
 
 export default function (context, opts = {}) {
-
-
   const plugins = [
     // adds React import declaration if file contains JSX tags
     require.resolve('babel-plugin-transform-runtime'),
@@ -14,7 +12,8 @@ export default function (context, opts = {}) {
     require.resolve('babel-plugin-transform-decorators-legacy'),
     require.resolve('babel-plugin-syntax-dynamic-import'),
     require.resolve('babel-plugin-transform-object-rest-spread'), // 对象添加spread操作符
-    ['import', { libraryName: 'antd', style: true }],
+    // ['import', { libraryName: 'antd', style: true }],
+    [require.resolve('babel-plugin-import'), { libraryName: 'antd', style: true }],
   ];
 
   if (env === 'development') {
