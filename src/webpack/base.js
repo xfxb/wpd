@@ -102,7 +102,8 @@ function getBaseConf(opt) {
                 require.resolve('babel-plugin-transform-decorators-legacy'),
                 require.resolve('babel-plugin-syntax-dynamic-import'),
                 require.resolve('babel-plugin-transform-object-rest-spread'), // 对象添加spread操作符
-                ['import', { libraryName: 'antd', style: true }],
+                [require.resolve('babel-plugin-import'), { libraryName: 'antd', style: true }],
+                // ['import', { libraryName: 'antd', style: true }],
                 // 'transform-class-properties',
                 // 'array-includes',
               ],
