@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 8000;
 
 export default function dev({
   webpackConfig,
-  port,
 }) {
   // compiler 对象上挂载了相应的 webpack 事件钩子
   // const compiler = webpack(webpackConfig);
@@ -33,17 +32,17 @@ export default function dev({
     // overlay: false,
     // host: HOST,
 
-     // contentBase: false,
-     host: HOST,
-     // disableHostCheck: true,
-     // contentBase: path.resolve(process.cwd(), 'public'),
-     // publicPath: '/',
-     port: PORT,
-     hot: true,
-     compress: true,
-     historyApiFallback: true,
-     inline: true,
-     progress: true,
+    // contentBase: false,
+    host: HOST,
+    // disableHostCheck: true,
+    // contentBase: path.resolve(process.cwd(), 'public'),
+    // publicPath: '/',
+    port: PORT,
+    hot: true,
+    compress: true,
+    historyApiFallback: true,
+    inline: true,
+    progress: true,
   };
   WebpackDevServer.addDevServerEntrypoints(webpackConfig, WebpackDevServerOptions);
   const server = new WebpackDevServer(webpack(webpackConfig), WebpackDevServerOptions);

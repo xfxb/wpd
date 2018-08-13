@@ -1,5 +1,5 @@
 import Config from 'webpack-chain';
-import { join, resolve, relative, } from 'path';
+import { join, resolve } from 'path';
 import { existsSync } from 'fs';
 // import assert from 'assert';
 import resolveDefine from './resolveDefine';
@@ -19,24 +19,31 @@ export default function (opts) {
   webpackConfig.mode('development');
 
   // entry
-  if (opts.entry) {
-    for (const key in opts.entry) {
-      const entry = webpackConfig.entry(key);
-      makeArray(opts.entry[key]).forEach((file) => {
-        entry.add(resolve(cwd, file || 'src/index.js'));
-      });
-    }
-  }
+  // PS 在热更新中使用下面的代码，会报错
+  // [HMR] Update failed: ReferenceError: installedChunks is not defined
+  // if (opts.entry) {
+  //   for (const key in opts.entry) {
+  //     const entry = webpackConfig.entry(key);
+  //     makeArray(opts.entry[key]).forEach((file) => {
+  //       entry.add(resolve(cwd, file || 'src/index.js'));
+  //     });
+  //   }
+  // }
+
+  webpackConfig
+    .entry('main')
+    .add(resolve(cwd, 'src/index.js'))
+    .end();
 
 
   // output
   const absOutputPath = resolve(cwd, opts.outputPath || 'dist');
   webpackConfig.output
     .path(absOutputPath)
-    .filename('[name].js')
-    // .chunkFilename('[name].async.js')
-    // .publicPath(opts.publicPath || join(cwd, 'dist'))
-    // .devtoolModuleFilenameTemplate(info => relative(opts.cwd, info.absoluteResourcePath).replace(/\\/g, '/'));
+    .filename('[name].js');
+  // .chunkFilename('[name].async.js')
+  // .publicPath(opts.publicPath || join(cwd, 'dist'))
+  // .devtoolModuleFilenameTemplate(info => relative(opts.cwd, info.absoluteResourcePath).replace(/\\/g, '/'));
 
   // resolve
   webpackConfig.resolve
