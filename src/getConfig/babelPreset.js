@@ -4,6 +4,8 @@ const env = process.env.NODE_ENV;
 
 
 export default function (context, opts = {}) {
+
+
   const plugins = [
     // adds React import declaration if file contains JSX tags
     require.resolve('babel-plugin-transform-runtime'),

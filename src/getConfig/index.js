@@ -1,7 +1,5 @@
 import Config from 'webpack-chain';
-import {
-  join, resolve, relative,
-} from 'path';
+import { join, resolve, relative, } from 'path';
 import { existsSync } from 'fs';
 // import assert from 'assert';
 import resolveDefine from './resolveDefine';
@@ -25,10 +23,11 @@ export default function (opts) {
     for (const key in opts.entry) {
       const entry = webpackConfig.entry(key);
       makeArray(opts.entry[key]).forEach((file) => {
-        entry.add(resolve(cwd, file));
+        entry.add(resolve(cwd, file || 'src/index.js'));
       });
     }
   }
+
 
   // output
   const absOutputPath = resolve(cwd, opts.outputPath || 'dist');
@@ -65,19 +64,19 @@ export default function (opts) {
   }
 
   // resolveLoader
-  webpackConfig.resolveLoader.modules
-    .add('node_modules')
-    .add(join(__dirname, '../../node_modules'))
-    .end();
+  // webpackConfig.resolveLoader.modules
+  //   .add('node_modules')
+  //   .add(join(__dirname, '../../node_modules'))
+  //   .end();
 
-  if (!opts.disableDynamicImport && !process.env.__FROM_UMI_TEST) {
-    webpackConfig.optimization
-      .splitChunks({
-        chunks: 'async',
-        name: 'vendors',
-      })
-      .runtimeChunk(false);
-  }
+  // if (!opts.disableDynamicImport && !process.env.__FROM_UMI_TEST) {
+  //   webpackConfig.optimization
+  //     .splitChunks({
+  //       chunks: 'async',
+  //       name: 'vendors',
+  //     })
+  //     .runtimeChunk(false);
+  // }
 
   // module -> exclude
   const DEFAULT_INLINE_LIMIT = 10000;
@@ -152,34 +151,34 @@ export default function (opts) {
 
   // plugins -> case sensitive
   // 解决osx文件名大小写的问题
-  webpackConfig
-    .plugin('case-sensitive-paths')
-    .use(require('case-sensitive-paths-webpack-plugin'));
+  // webpackConfig
+  //   .plugin('case-sensitive-paths')
+  //   .use(require('case-sensitive-paths-webpack-plugin'));
 
   // plugins -> progress bar
-  if (!process.env.__FROM_UMI_TEST) {
-    webpackConfig.plugin('progress').use(require('webpack/lib/ProgressPlugin'));
-  }
+  // if (!process.env.__FROM_UMI_TEST) {
+  //   webpackConfig.plugin('progress').use(require('webpack/lib/ProgressPlugin'));
+  // }
 
   // plugins -> ignore moment locale
-  if (opts.ignoreMomentLocale) {
-    webpackConfig
-      .plugin('ignore-moment-locale')
-      .use(require('webpack/lib/IgnorePlugin'), [/^\.\/locale$/, /moment$/]);
-  }
+  // if (opts.ignoreMomentLocale) {
+  //   webpackConfig
+  //     .plugin('ignore-moment-locale')
+  //     .use(require('webpack/lib/IgnorePlugin'), [/^\.\/locale$/, /moment$/]);
+  // }
 
   // plugins -> analyze
-  if (process.env.ANALYZE) {
-    webpackConfig
-      .plugin('bundle-analyzer')
-      .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, [
-        {
-          analyzerMode: 'server',
-          analyzerPort: process.env.ANALYZE_PORT || 8888,
-          openAnalyzer: true,
-        },
-      ]);
-  }
+  // if (process.env.ANALYZE) {
+  //   webpackConfig
+  //     .plugin('bundle-analyzer')
+  //     .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, [
+  //       {
+  //         analyzerMode: 'server',
+  //         analyzerPort: process.env.ANALYZE_PORT || 8888,
+  //         openAnalyzer: true,
+  //       },
+  //     ]);
+  // }
 
   // plugins -> copy
   if (existsSync(join(opts.cwd, 'public'))) {
@@ -208,15 +207,15 @@ export default function (opts) {
   }
 
   // plugins -> friendly-errors
-  if (!process.env.__FROM_UMI_TEST) {
-    webpackConfig
-      .plugin('friendly-errors')
-      .use(require('friendly-errors-webpack-plugin'), [
-        {
-          clearConsole: process.env.CLEAR_CONSOLE !== 'none',
-        },
-      ]);
-  }
+  // if (!process.env.__FROM_UMI_TEST) {
+  //   webpackConfig
+  //     .plugin('friendly-errors')
+  //     .use(require('friendly-errors-webpack-plugin'), [
+  //       {
+  //         clearConsole: process.env.CLEAR_CONSOLE !== 'none',
+  //       },
+  //     ]);
+  // }
 
   // externals
   if (opts.externals) {
