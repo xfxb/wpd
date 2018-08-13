@@ -34,9 +34,9 @@ export default function (opts) {
   webpackConfig.output
     .path(absOutputPath)
     .filename('[name].js')
-    .chunkFilename('[name].async.js')
+    // .chunkFilename('[name].async.js')
     // .publicPath(opts.publicPath || join(cwd, 'dist'))
-    .devtoolModuleFilenameTemplate(info => relative(opts.cwd, info.absoluteResourcePath).replace(/\\/g, '/'));
+    // .devtoolModuleFilenameTemplate(info => relative(opts.cwd, info.absoluteResourcePath).replace(/\\/g, '/'));
 
   // resolve
   webpackConfig.resolve
