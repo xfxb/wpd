@@ -2,6 +2,7 @@ import webpack from 'webpack';
 // import WebpackDevServer from 'webpack-dev-server';
 import WebpackDevServer from 'webpack-dev-server/lib/Server';
 
+// console.log(333333333,'------------');
 
 const HOST = process.env.HOST || '0.0.0.0';
 const PORT = process.env.PORT || 8000;
@@ -21,22 +22,22 @@ export default function dev({
     // clientLogLevel: 'none',
     // hot: true,
     // quiet: true,
-    // headers: {
-    //   'access-control-allow-origin': '*',
-    // },
     // // publicPath: webpackConfig.output.publicPath,
     // watchOptions: {
-    //   ignored: /node_modules/,
-    // },
-    // historyApiFallback: false,
-    // overlay: false,
-    // host: HOST,
-
-    // contentBase: false,
+      //   ignored: /node_modules/,
+      // },
+      // historyApiFallback: false,
+      // overlay: false,
+      // host: HOST,
+      
+      // contentBase: false,
+      // disableHostCheck: true,
+      // contentBase: path.resolve(process.cwd(), 'public'),
+      // publicPath: '/',
+    headers: {
+      'access-control-allow-origin': '*',
+    },
     host: HOST,
-    // disableHostCheck: true,
-    // contentBase: path.resolve(process.cwd(), 'public'),
-    // publicPath: '/',
     port: PORT,
     hot: true,
     compress: true,
