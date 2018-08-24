@@ -20,8 +20,6 @@ function getWebpackConfig() {
         }
     }
 
-    console.log(1231231231,'------');
-
     return getConfig.default({
         ...config,
         html: {

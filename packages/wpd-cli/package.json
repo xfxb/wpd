@@ -1,0 +1,12 @@
+{
+  "name": "wpd-cli",
+  "version": "0.1.0",
+  "description": "wpd-cli",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["wpd", "webpack", "ant.design", "dva"],
+  "author": "xfxb",
+  "license": "ISC"
+}
