@@ -2,7 +2,7 @@
   "name": "wpd",
   "version": "0.2.0",
   "description": "webapck ant.design dva build",
-  "main": "bin/wpd.js",
+  "main": "index.js",
   "bin": {
     "wpd": "./bin/wpd.js"
   },
