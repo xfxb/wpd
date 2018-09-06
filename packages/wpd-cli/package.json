@@ -1,6 +1,6 @@
 {
   "name": "wpd-cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "wpd-cli",
   "main": "bin/wpd-cli.js",
   "bin": {
@@ -34,17 +34,17 @@
     "shelljs": "^0.8.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.8.0",
     "babel-eslint": "^9.0.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-runtime": "^6.23.0",
     "eslint": "^4.14.0",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.1",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.8.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-runtime": "^6.23.0"
+    "eslint-plugin-react": "^7.11.1"
   }
 }

@@ -28,12 +28,12 @@
   },
   "homepage": "https://github.com/xfxb/wpd#readme",
   "devDependencies": {
-    "eslint": "^4.14.0",
     "babel-eslint": "^9.0.0",
-    "eslint-plugin-react": "^7.11.1",
+    "eslint": "^4.14.0",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1"
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1"
   },
   "dependencies": {
     "assert": "^1.4.1",
