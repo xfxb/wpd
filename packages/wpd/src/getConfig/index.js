@@ -35,15 +35,13 @@ export default function (opts) {
     .add(resolve(cwd, 'src/index.js'))
     .end();
 
-
   // output
   const absOutputPath = resolve(cwd, opts.outputPath || 'dist');
-  webpackConfig.output
-    .path(absOutputPath)
-    .filename('[name].js');
+  webpackConfig.output.path(absOutputPath).filename('[name].js');
   // .chunkFilename('[name].async.js')
   // .publicPath(opts.publicPath || join(cwd, 'dist'))
-  // .devtoolModuleFilenameTemplate(info => relative(opts.cwd, info.absoluteResourcePath).replace(/\\/g, '/'));
+  // .devtoolModuleFilenameTemplate(info =>
+  // relative(opts.cwd, info.absoluteResourcePath).replace(/\\/g, '/'));
 
   // resolve
   webpackConfig.resolve
@@ -147,9 +145,7 @@ export default function (opts) {
   require('./css').default(webpackConfig, opts);
 
   // plugins -> html
-  webpackConfig
-    .plugin('HtmlWebpackPlugin')
-    .use(require('html-webpack-plugin'), [opts.html]);
+  webpackConfig.plugin('HtmlWebpackPlugin').use(require('html-webpack-plugin'), [opts.html]);
 
   // plugins -> define
   webpackConfig
@@ -201,15 +197,14 @@ export default function (opts) {
   }
   if (opts.copy) {
     makeArray(opts.copy).forEach((copy, index) => {
+      let copyObj = copy;
       if (typeof copy === 'string') {
-        copy = {
+        copyObj = {
           from: join(opts.cwd, copy),
           to: absOutputPath,
         };
       }
-      webpackConfig
-        .plugin(`copy-${index}`)
-        .use(require('copy-webpack-plugin'), [[copy]]);
+      webpackConfig.plugin(`copy-${index}`).use(require('copy-webpack-plugin'), [[copyObj]]);
     });
   }
 

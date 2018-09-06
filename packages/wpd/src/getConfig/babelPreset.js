@@ -2,7 +2,6 @@ import { join } from 'path';
 
 const env = process.env.NODE_ENV;
 
-
 export default function (context, opts = {}) {
   const plugins = [
     // adds React import declaration if file contains JSX tags
@@ -17,22 +16,21 @@ export default function (context, opts = {}) {
   ];
 
   if (env === 'development') {
-    plugins.push(
-      [
-        require.resolve('babel-plugin-react-transform'), {
-          transforms: [{
+    plugins.push([
+      require.resolve('babel-plugin-react-transform'),
+      {
+        transforms: [
+          {
             transform: require.resolve('react-transform-catch-errors'),
             imports: [
               join(opts.cwd, 'node_modules/react'),
               join(opts.cwd, 'node_modules/redbox-react'),
             ],
-          }],
-        },
-      ],
-    );
-    plugins.push(
-      require.resolve('babel-plugin-dva-hmr'),
-    );
+          },
+        ],
+      },
+    ]);
+    plugins.push(require.resolve('babel-plugin-dva-hmr'));
   }
 
   const browsers = opts.browsers || ['last 2 versions'];

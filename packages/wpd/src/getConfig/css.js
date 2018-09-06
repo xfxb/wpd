@@ -44,9 +44,7 @@ export default function (webpackConfig, opts) {
   };
   const cssModulesConfig = {
     modules: true,
-    localIdentName: isDev
-      ? '[name]__[local]___[hash:base64:5]'
-      : '[local]___[hash:base64:5]',
+    localIdentName: isDev ? '[name]__[local]___[hash:base64:5]' : '[local]___[hash:base64:5]',
   };
   const lessOptions = {
     modifyVars: opts.theme || {},
@@ -65,9 +63,7 @@ export default function (webpackConfig, opts) {
     if (isDev) {
       rule.use('style-loader').loader(require.resolve('style-loader'));
     } else {
-      rule
-        .use('extract-css-loader')
-        .loader(require('mini-css-extract-plugin').loader);
+      rule.use('extract-css-loader').loader(require('mini-css-extract-plugin').loader);
     }
 
     rule
@@ -113,26 +109,17 @@ export default function (webpackConfig, opts) {
   }
 
   if (opts.cssModulesWithAffix) {
-    applyCSSRules(
-      webpackConfig.module.rule('.module.css').test(/\.module\.css/),
-      {
-        cssModules: true,
-      },
-    );
-    applyCSSRules(
-      webpackConfig.module.rule('.module.less').test(/\.module\.less/),
-      {
-        cssModules: true,
-        less: true,
-      },
-    );
-    applyCSSRules(
-      webpackConfig.module.rule('.module.sass').test(/\.module\.(sass|scss)/),
-      {
-        cssModules: true,
-        sass: true,
-      },
-    );
+    applyCSSRules(webpackConfig.module.rule('.module.css').test(/\.module\.css/), {
+      cssModules: true,
+    });
+    applyCSSRules(webpackConfig.module.rule('.module.less').test(/\.module\.less/), {
+      cssModules: true,
+      less: true,
+    });
+    applyCSSRules(webpackConfig.module.rule('.module.sass').test(/\.module\.(sass|scss)/), {
+      cssModules: true,
+      sass: true,
+    });
   }
 
   function cssExclude(filePath) {
@@ -213,13 +200,11 @@ export default function (webpackConfig, opts) {
 
   if (!isDev) {
     const hash = opts.hash ? '.[contenthash:8]' : '';
-    webpackConfig
-      .plugin('extract-css')
-      .use(require('mini-css-extract-plugin'), [
-        {
-          filename: `[name]${hash}.css`,
-          chunkFilename: `[name]${hash}.chunk.css`,
-        },
-      ]);
+    webpackConfig.plugin('extract-css').use(require('mini-css-extract-plugin'), [
+      {
+        filename: `[name]${hash}.css`,
+        chunkFilename: `[name]${hash}.chunk.css`,
+      },
+    ]);
   }
 }

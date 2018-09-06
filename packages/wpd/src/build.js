@@ -1,7 +1,6 @@
 import webpack from 'webpack';
 import rimraf from 'rimraf';
 
-
 export default function build(opts = {}) {
   const { webpackConfig } = opts;
 

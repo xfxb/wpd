@@ -5,7 +5,8 @@ import uglifyOptions from './uglifyOptions';
 function mergeConfig(config, userConfig) {
   if (typeof userConfig === 'function') {
     return userConfig(config);
-  } if (isPlainObject(userConfig)) {
+  }
+  if (isPlainObject(userConfig)) {
     return {
       ...config,
       ...userConfig,
@@ -51,9 +52,7 @@ export default function (webpackConfig, opts) {
   if (disableCompress || process.env.__FROM_UMI_TEST) {
     webpackConfig.optimization.minimize(false);
   } else {
-    webpackConfig
-      .plugin('hash-module-ids')
-      .use(require('webpack/lib/HashedModuleIdsPlugin'));
+    webpackConfig.plugin('hash-module-ids').use(require('webpack/lib/HashedModuleIdsPlugin'));
 
     webpackConfig.optimization.minimizer([
       new UglifyPlugin(

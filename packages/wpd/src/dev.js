@@ -9,9 +9,7 @@ const PORT = process.env.PORT || 8000;
 
 // process.env.NODE_ENV = 'development';
 
-export default function dev({
-  webpackConfig,
-}) {
+export default function dev({ webpackConfig }) {
   // compiler 对象上挂载了相应的 webpack 事件钩子
   // const compiler = webpack(webpackConfig);
   // console.log(webpackConfig);
@@ -24,16 +22,16 @@ export default function dev({
     // quiet: true,
     // // publicPath: webpackConfig.output.publicPath,
     // watchOptions: {
-      //   ignored: /node_modules/,
-      // },
-      // historyApiFallback: false,
-      // overlay: false,
-      // host: HOST,
-      
-      // contentBase: false,
-      // disableHostCheck: true,
-      // contentBase: path.resolve(process.cwd(), 'public'),
-      // publicPath: '/',
+    //   ignored: /node_modules/,
+    // },
+    // historyApiFallback: false,
+    // overlay: false,
+    // host: HOST,
+
+    // contentBase: false,
+    // disableHostCheck: true,
+    // contentBase: path.resolve(process.cwd(), 'public'),
+    // publicPath: '/',
     headers: {
       'access-control-allow-origin': '*',
     },
