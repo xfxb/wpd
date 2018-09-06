@@ -2,11 +2,49 @@
   "name": "wpd-cli",
   "version": "0.1.0",
   "description": "wpd-cli",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "main": "bin/wpd-cli.js",
+  "bin": {
+    "wpd": "./bin/wpd-cli.js"
   },
-  "keywords": ["wpd", "webpack", "ant.design", "dva"],
+  "keywords": [
+    "wpd",
+    "webpack",
+    "ant.design",
+    "dva"
+  ],
+  "scripts": {
+    "clean": "rimraf lib",
+    "build": "npm run clean && babel src -d lib",
+    "watch": "babel src --out-dir lib -w",
+    "major": "npm version major && git push --follow-tags && npm publish",
+    "minor": "npm version minor && git push --follow-tags && npm publish",
+    "patch": "npm version patch && git push --follow-tags && npm publish",
+    "prerelease": "npm version prerelease && git push --follow-tags && npm publish --tag Pre-alpha"
+  },
   "author": "xfxb",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xfxb/wpd/issues"
+  },
+  "homepage": "https://github.com/xfxb/wpd#readme",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "download-git-repo": "^1.1.0",
+    "ora": "^3.0.0",
+    "shelljs": "^0.8.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.8.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-runtime": "^6.23.0"
+  }
 }
