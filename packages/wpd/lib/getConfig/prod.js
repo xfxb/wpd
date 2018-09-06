@@ -60,7 +60,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function mergeConfig(config, userConfig) {
   if (typeof userConfig === 'function') {
     return userConfig(config);
-  }if ((0, _isPlainObject2.default)(userConfig)) {
+  }
+  if ((0, _isPlainObject2.default)(userConfig)) {
     return _extends({}, config, userConfig);
   }
   return config;

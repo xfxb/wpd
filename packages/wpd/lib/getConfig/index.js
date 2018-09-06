@@ -37,7 +37,8 @@ exports.default = function (opts) {
   webpackConfig.output.path(absOutputPath).filename('[name].js');
   // .chunkFilename('[name].async.js')
   // .publicPath(opts.publicPath || join(cwd, 'dist'))
-  // .devtoolModuleFilenameTemplate(info => relative(opts.cwd, info.absoluteResourcePath).replace(/\\/g, '/'));
+  // .devtoolModuleFilenameTemplate(info =>
+  // relative(opts.cwd, info.absoluteResourcePath).replace(/\\/g, '/'));
 
   // resolve
   webpackConfig.resolve.set('symlinks', false).modules.add('node_modules').add((0, _path.join)(__dirname, '../../node_modules')).end().extensions.merge(['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx', '.web.ts', '.ts', '.web.tsx', '.tsx']);
@@ -142,13 +143,14 @@ exports.default = function (opts) {
   }
   if (opts.copy) {
     makeArray(opts.copy).forEach(function (copy, index) {
+      var copyObj = copy;
       if (typeof copy === 'string') {
-        copy = {
+        copyObj = {
           from: (0, _path.join)(opts.cwd, copy),
           to: absOutputPath
         };
       }
-      webpackConfig.plugin('copy-' + index).use(require('copy-webpack-plugin'), [[copy]]);
+      webpackConfig.plugin('copy-' + index).use(require('copy-webpack-plugin'), [[copyObj]]);
     });
   }
 
